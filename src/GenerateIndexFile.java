@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +44,7 @@ public class GenerateIndexFile {
             for (File dir : dirs) {
                 indexWriter.write(String.format("    <a href=\"%s\">%s</a> <br>\n", "./" + dir.getName() + "/", "/" + dir.getName()));
                 hipsWriter.write(String.format("hips_service_url = %s\n", "./" + dir.getName()));
-                hipsWriter.write(String.format("hips_release_date = %s\n", Instant.now().toString()));
+                hipsWriter.write(String.format("hips_release_date = %s\n", formatDate()));
                 hipsWriter.write("hips_status = public mirror clonableOnce\n");
                 int i = 0;
                 try(Scanner sc = new Scanner(new File(dir.toPath() +"/index.html"));
@@ -62,5 +62,15 @@ public class GenerateIndexFile {
             }
             indexWriter.write("</body>");
         }
+    }
+
+    private static String formatDate() {
+        LocalDateTime now = LocalDateTime.now();
+        return String.format("%04d-%02d-%02dT%02d:%02dZ",
+                now.getYear(),
+                now.getMonthValue(),
+                now.getDayOfMonth(),
+                now.getHour(),
+                now.getMinute());
     }
 }
