@@ -1,0 +1,24 @@
+# Sample workflow for building and deploying an Astro site to GitHub Pages
+#
+# To get started with Astro see: https://docs.astro.build/en/getting-started/
+#
+name: Deploy file to releases
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: djnicholson/release-action@v2.11
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-name: 'Latest rolling build'
+          tag-name: 'v1.3-alpha'
+          asset-name: 'GenerateIndexFile.java'
+          file: 'src/GenerateIndexFile.java'
