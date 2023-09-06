@@ -43,9 +43,9 @@ public class GenerateIndexFile {
                     "    <h3>You can find more info at <a href=\"https://aladin.cds.unistra.fr/hips/\">Aladin</a> site</h3>");
             for (File dir : dirs) {
                 indexWriter.write(String.format("    <a href=\"%s\">%s</a> <br>\n", "./" + dir.getName() + "/", "/" + dir.getName()));
-                hipsWriter.write(String.format("hips_service_url = %s\n", "./" + dir.getName()));
+                hipsWriter.write(String.format("hips_service_url = %s\n", "https://data.itoncek.space/" + dir.getName()));
                 hipsWriter.write(String.format("hips_release_date = %s\n", formatDate()));
-                hipsWriter.write("hips_status = public mirror clonableOnce\n");
+                hipsWriter.write("hips_status = public master clonableOnce\n");
                 int i = 0;
                 try(Scanner sc = new Scanner(new File(dir.toPath() +"/index.html"));
                     FileWriter indexModifier = new FileWriter(dir.toPath() +"/index2.html")) {
